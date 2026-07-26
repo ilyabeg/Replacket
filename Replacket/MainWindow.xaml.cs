@@ -1,6 +1,7 @@
 ﻿using Replacket.View.ViewModels;
 using System.Windows;
 using Microsoft.Win32;
+using ReplacketModel.Events;
 
 namespace Replacket
 {
@@ -14,6 +15,7 @@ namespace Replacket
             _mainVM = new MainViewModel();
 
             _mainVM.OnPickupBrowseClick += BrowsePickupFile;
+            _mainVM.OnSystemCrash += DisplayErrorMsgBox;
 
             DataContext = _mainVM;
         }
@@ -32,5 +34,8 @@ namespace Replacket
                 _mainVM.PcapFile = dialog.FileName;
             }
         }
+
+        // error message box display
+        private void DisplayErrorMsgBox(object sender, SystemErrorEventArgs e) => MessageBox.Show(e.ErrorMessage, "SYSTEM ERROR", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
     }
 }

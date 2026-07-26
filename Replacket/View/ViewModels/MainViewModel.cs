@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using SharpPcap;
+using ReplacketModel.Events;
 
 namespace Replacket.View.ViewModels
 {
@@ -105,13 +106,18 @@ namespace Replacket.View.ViewModels
         // browse buttons click event
         public event Action OnPickupBrowseClick;
 
+        // system crash event to invoke kmsgbox error in UI
+        public event Action<object, SystemErrorEventArgs> OnSystemCrash;
+
         // model reference
         private PcapIterator _model;
 
-        // constructor
+
+        // CONSTRUCTOR
         public MainViewModel()
         {
             _model = new PcapIterator();
+            _model.OnSystemError += (s, e) => OnSystemCrash?.Invoke(this, e);
 
             StartCommand = new RelayCommand(ExecuteStart, CanStart);
             StopCommand = new RelayCommand(ExecuteStop);
@@ -119,6 +125,7 @@ namespace Replacket.View.ViewModels
 
             GetNetworkInterfaces();
         }
+
 
         private void GetNetworkInterfaces()
         {
@@ -143,7 +150,7 @@ namespace Replacket.View.ViewModels
         // button commands
         private void ExecuteStart(object parameter)
         {
-            _model.Iterate();
+            _model.Iterate(Delay, Repeat);
         }
         private bool CanStart(object parameter)
         {
