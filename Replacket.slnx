@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Replacket/Replacket.csproj" />
+  <Project Path="ReplacketModel/ReplacketModel.csproj" />
+</Solution>
