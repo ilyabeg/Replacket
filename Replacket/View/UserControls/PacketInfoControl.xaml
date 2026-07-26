@@ -5,8 +5,41 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Replacket.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="500" d:DesignWidth="400">
+    
+    <Grid Background="{StaticResource MaterialDesignLightSeparatorBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        
+        <!-- Progress headline with info icon -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+
+            <!-- info icon -->
+            <materialDesign:PackIcon Kind="InformationOutline" 
+                     Width="32" Height="32" 
+                     Foreground="{StaticResource PrimaryTxtColorBrush}" 
+                     VerticalAlignment="Center" 
+                     Margin="15,10,0,5" />
+
+            <TextBlock Grid.Row="0" Style="{StaticResource PacketInfoHeader}" />
+
+        </StackPanel>
+
+
+        <Grid Grid.Row="1" Margin="10" >
+            <Border BorderThickness="2" BorderBrush="{StaticResource MaterialDesignDarkSeparatorBackground}">
+                <Grid Margin="5">
+
+                    <!-- actual packet information -->
+
+                </Grid>
+            </Border>
+        </Grid>
+
     </Grid>
+    
 </UserControl>

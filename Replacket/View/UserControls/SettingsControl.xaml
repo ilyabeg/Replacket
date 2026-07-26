@@ -25,7 +25,7 @@
                              VerticalAlignment="Center" 
                              Margin="20,40,5,0" />
 
-            <TextBlock Text="Settings:" 
+            <TextBlock 
                Style="{StaticResource SettingsHeadline}" 
                VerticalAlignment="Center" />
             

@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Progress..." 
+        <TextBlock Grid.Row="0" 
             Style="{StaticResource ProgressHeadline}" 
             VerticalAlignment="Center" />
 

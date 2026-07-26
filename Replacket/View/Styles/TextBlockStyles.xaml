@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="SettingsHeadline" TargetType="TextBlock" >
+        <Setter Property="Text" Value="Settings:" />
         <Setter Property="FontSize" Value="30" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTxtColorBrush}" />
         <Setter Property="FontWeight" Value="SemiBold" />
@@ -24,10 +25,22 @@
     </Style>
 
     <Style x:Key="ProgressHeadline" TargetType="TextBlock" >
+        <Setter Property="Text" Value="Progress..." />
         <Setter Property="FontSize" Value="23" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTxtColorBrush}" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Margin" Value="10" />
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+    </Style>
+
+    <Style x:Key="PacketInfoHeader" TargetType="TextBlock" >
+        <Setter Property="Text" Value="Packet info:" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTxtColorBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Margin" Value="5,10,10,5" />
         <Setter Property="Width" Value="Auto" />
         <Setter Property="Height" Value="Auto" />
         <Setter Property="VerticalAlignment" Value="Bottom" />
