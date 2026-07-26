@@ -12,7 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
 
                 <!-- Material Design Themes -->
-                <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="DeepPurple" SecondaryColor="Amber" />
+                <materialDesign:BundledTheme BaseTheme="Dark"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
                 
                 <!-- Custom Reource Dicts -->

@@ -4,9 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Replacket.View.UserControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="50" d:DesignWidth="140">
+
+    <Grid Background="{StaticResource MaterialDesignLightSeparatorBackground}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!-- Start btn -->
+        <Button Grid.Column="0" Style="{StaticResource StartBtnStyle}" />
+
+        <!-- Stop btn -->
+        <Button Grid.Column="1" Style="{StaticResource StopBtnStyle}" />
+
     </Grid>
+    
 </UserControl>
