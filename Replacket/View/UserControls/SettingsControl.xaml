@@ -25,9 +25,8 @@
                              VerticalAlignment="Center" 
                              Margin="20,40,5,0" />
 
-            <!-- The Text -->
             <TextBlock Text="Settings:" 
-               Style="{StaticResource HeadlineTxtBlockStyle}" 
+               Style="{StaticResource SettingsHeadline}" 
                VerticalAlignment="Center" />
             
         </StackPanel>
