@@ -15,10 +15,10 @@
         </Grid.ColumnDefinitions>
 
         <!-- Start btn -->
-        <Button Grid.Column="0" Style="{StaticResource StartBtnStyle}" />
+        <Button Grid.Column="0" Style="{StaticResource StartBtnStyle}" Command="{Binding StartCommand}" />
 
         <!-- Stop btn -->
-        <Button Grid.Column="1" Style="{StaticResource StopBtnStyle}" />
+        <Button Grid.Column="1" Style="{StaticResource StopBtnStyle}" Command="{Binding StopCommand}" />
 
     </Grid>
     

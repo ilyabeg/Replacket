@@ -53,19 +53,37 @@
             <TextBlock Grid.Row="0" Grid.Column="0" Text="DelayTime:" 
                     Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,20" />
 
-            <TextBox Grid.Row="0" Grid.Column="1"
-                    Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,20" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Delay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalAlignment="Center" Margin="0,0,15,20">
+                <TextBox.Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource InputTxtBox}">
+                        <Style.Triggers>
+
+                            <!-- Bind text box to the checkbox IsChecked value (the checkbox is bound to NormalChecked) -->
+                            <DataTrigger Binding="{Binding NormalChecked}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding NormalChecked}" Value="False">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
 
             <CheckBox Grid.Row="0" Grid.Column="2" Content="Normal speed" 
-                    FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource PrimaryTxtColorBrush}" 
-                    VerticalAlignment="Center" Margin="0,0,0,20"/>
+                      FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource PrimaryTxtColorBrush}" 
+                      VerticalAlignment="Center" Margin="0,0,0,20"
+                      IsChecked="{Binding NormalChecked}"/>
 
 
             <!-- Repeat -->
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Repeat:" 
                     Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,20" />
 
-            <TextBox Grid.Row="1" Grid.Column="1" 
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Repeat, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,20" />
 
 
@@ -74,23 +92,27 @@
                     Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,20" />
 
             <TextBox Grid.Row="2" Grid.Column="1" 
+                    Text="{Binding DestFile, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,20" />
 
             <Button Grid.Row="2" Grid.Column="2" 
                     Style="{StaticResource FileExplorerBtn}"
+                    Command="{Binding BrowseDestCommand}"
                     VerticalAlignment="Center" 
                     Margin="0,0,0,20"/>
 
 
             <!-- Pickup file -->
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Pickup File:" 
-                    Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,0" />
+                     Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,0" />
 
-            <TextBox Grid.Row="3" Grid.Column="1" 
-             Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,0" />
+            <TextBox Grid.Row="3" Grid.Column="1"
+                     Text="{Binding PcapFile, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,0" />
 
             <Button Grid.Row="3" Grid.Column="2" 
-                    Style="{StaticResource FileExplorerBtn}"/>
+                     Style="{StaticResource FileExplorerBtn}"
+                     Command="{Binding BrowsePickupCommand}"/>
 
         </Grid>
     </Grid>

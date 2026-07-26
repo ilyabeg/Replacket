@@ -21,7 +21,7 @@
         <ProgressBar Grid.Row="1" 
              x:Name="progressBar"
              Style="{StaticResource MaterialDesignLinearProgressBar}" 
-             Value="50" 
+             Value="{Binding Progress}"
              Height="30" 
              Margin="15,0,15,20"
              BorderBrush="{StaticResource MaterialDesignShadowBrush}"
