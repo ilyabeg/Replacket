@@ -10,6 +10,11 @@
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="5.3.2" />
+    <PackageReference Include="SharpPcap" Version="6.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReplacketModel\ReplacketModel.csproj" />
   </ItemGroup>
 
 </Project>

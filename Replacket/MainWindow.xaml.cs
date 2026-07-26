@@ -14,7 +14,6 @@ namespace Replacket
             _mainVM = new MainViewModel();
 
             _mainVM.OnPickupBrowseClick += BrowsePickupFile;
-            _mainVM.OnDestBrowseClick += BrowseDestFile;
 
             DataContext = _mainVM;
         }
@@ -31,20 +30,6 @@ namespace Replacket
             if (dialog.ShowDialog() == true)
             {
                 _mainVM.PcapFile = dialog.FileName;
-            }
-        }
-
-        // get network interface destenation
-        private void BrowseDestFile()
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-
-            // search for network interfaces only
-            dialog.Filter = "All Files (*.*)|*.*";
-
-            if (dialog.ShowDialog() == true)
-            {
-                _mainVM.DestFile = dialog.FileName;
             }
         }
     }

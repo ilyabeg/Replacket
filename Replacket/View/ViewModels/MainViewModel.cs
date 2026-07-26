@@ -1,8 +1,11 @@
 ﻿using Replacket.View.Helpers;
+using ReplacketModel.Models;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.IO;
+using SharpPcap;
 
 namespace Replacket.View.ViewModels
 {
@@ -14,7 +17,6 @@ namespace Replacket.View.ViewModels
 
         // browse files command
         public ICommand BrowsePickupCommand { get; }
-        public ICommand BrowseDestCommand { get; }
 
 
         // progress bar progress
@@ -71,14 +73,18 @@ namespace Replacket.View.ViewModels
             }
         }
 
-        // destanation interface file
+        // all avaiable network interfaces on my computer
+        public ObservableCollection<string> AvailableInterfaces { get; set; } = new();
+
+        // destanation interface file (selection)
         private string _destInterface;
-        public string DestFile
+        public string DestenationInterface
         {
             get { return _destInterface; }
-            set 
+            set
             {
                 _destInterface = value;
+                _model.DestFile = value;
                 OnPropertyChanged();
             }
         }
@@ -91,43 +97,60 @@ namespace Replacket.View.ViewModels
             set 
             {
                 _pcapFile = value;
+                _model.PcapFile = value;
                 OnPropertyChanged();
             }
         }
 
         // browse buttons click event
         public event Action OnPickupBrowseClick;
-        public event Action OnDestBrowseClick;
 
         // model reference
-        //private Model _model;
+        private PcapIterator _model;
 
         // constructor
         public MainViewModel()
         {
-            //_model = new Model();
+            _model = new PcapIterator();
 
             StartCommand = new RelayCommand(ExecuteStart, CanStart);
             StopCommand = new RelayCommand(ExecuteStop);
             BrowsePickupCommand = new RelayCommand(BrowsePickupClicked);
-            BrowseDestCommand = new RelayCommand(BrowseDestClicked);
+
+            GetNetworkInterfaces();
+        }
+
+        private void GetNetworkInterfaces()
+        {
+            AvailableInterfaces.Clear();
+
+            // all devices that SharpPcap finds
+            var devices = CaptureDeviceList.Instance;
+
+            if (devices.Count < 1)
+            {
+                AvailableInterfaces.Add("None.");
+                return;
+            }
+
+            foreach (var device in devices)
+            {
+                AvailableInterfaces.Add(device.Description); // al devices names
+            }
         }
 
 
         // button commands
         private void ExecuteStart(object parameter)
         {
-            // model.SendToDest(_destInterface, _pcapFile);
+            _model.Iterate();
         }
         private bool CanStart(object parameter)
         {
-            if (string.IsNullOrWhiteSpace(PcapFile) || string.IsNullOrWhiteSpace(DestFile))
+            if (string.IsNullOrWhiteSpace(PcapFile) || string.IsNullOrWhiteSpace(DestenationInterface))
                 return false;
 
             if (!File.Exists(PcapFile))
-                return false;
-
-            if (!File.Exists(DestFile))
                 return false;
 
             if (_delay < 0 || _repeat < 0)
@@ -138,16 +161,15 @@ namespace Replacket.View.ViewModels
 
         private void ExecuteStop(object parameter)
         {
-            //model.Stop();
+            _model.CeaseIterating();
         }
 
         // invoke event in main window to show file browse dialog
         private void BrowsePickupClicked(object parameter) => OnPickupBrowseClick?.Invoke();
-        private void BrowseDestClicked(object parameter) => OnDestBrowseClick?.Invoke();
 
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertName = null)
+        protected void OnPropertyChanged([CallerMemberName] string? propertName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertName));
         }

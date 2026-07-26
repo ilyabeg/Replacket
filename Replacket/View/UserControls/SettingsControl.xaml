@@ -87,25 +87,27 @@
                     Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,20" />
 
 
-            <!-- Destination file -->
+            <!-- Destination interface -->
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Destination:" 
                     Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,20" />
 
-            <TextBox Grid.Row="2" Grid.Column="1" 
-                    Text="{Binding DestFile, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,20" />
-
-            <Button Grid.Row="2" Grid.Column="2" 
-                    Style="{StaticResource FileExplorerBtn}"
-                    Command="{Binding BrowseDestCommand}"
-                    VerticalAlignment="Center" 
-                    Margin="0,0,0,20"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" 
+                     ItemsSource="{Binding AvailableInterfaces}"
+                     SelectedItem="{Binding DestenationInterface}"
+                     Style="{StaticResource MaterialDesignDataGridComboBox}" 
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     FontSize="15" FontWeight="Thin"
+                     Foreground="{StaticResource InputTxtColorBrush}"
+                     FontStyle="Italic" BorderBrush="{StaticResource InputTxtColorBrush}"
+                     BorderThickness="0,0,0,1"
+                     Width="50" Padding="0,0,0,4"/>
 
 
             <!-- Pickup file -->
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Pickup File:" 
                      Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,0" />
-
+            
             <TextBox Grid.Row="3" Grid.Column="1"
                      Text="{Binding PcapFile, UpdateSourceTrigger=PropertyChanged}"
                      Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,0" />
