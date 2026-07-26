@@ -4,35 +4,47 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Replacket"
+        xmlns:userControls="clr-namespace:Replacket.View.UserControls"
         mc:Ignorable="d"
-        Title="Replacket" Height="550" Width="550"
+        Title="Replacket" Height="600" Width="900"
         ResizeMode="NoResize">
     
     <!-- Main Grid -->
-    <Grid>
+    <Grid Background="{StaticResource MaterialDesignShadowBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
 
         <!-- Left side Grid -->
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="9*" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             
             
+            <!-- Packet info -->
+            <userControls:PacketInfoControl Grid.Row="0" />
+
+            <!-- Progress bar -->
+            <userControls:ProgressBar Grid.Row="1" />
+
         </Grid>
 
         <!-- Right side Grid -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="9*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
+            <!-- Settings tab -->
+            <userControls:SettingsControl Grid.Row="0" />
 
+            <!-- Switch control -->
+            <userControls:SwitchControl Grid.Row="1" />
+            
         </Grid>
     </Grid>
     

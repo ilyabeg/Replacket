@@ -29,7 +29,7 @@
         <Setter Property="FontSize" Value="23" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTxtColorBrush}" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="Margin" Value="15,5,10,5" />
         <Setter Property="Width" Value="Auto" />
         <Setter Property="Height" Value="Auto" />
         <Setter Property="VerticalAlignment" Value="Bottom" />

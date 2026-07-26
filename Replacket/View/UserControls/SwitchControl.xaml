@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Replacket.View.UserControls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="140">
+             d:DesignHeight="100" d:DesignWidth="300">
 
     <Grid Background="{StaticResource MaterialDesignLightSeparatorBackground}">
         <Grid.ColumnDefinitions>
