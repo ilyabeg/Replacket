@@ -11,7 +11,10 @@
   <ItemGroup>
     <Folder Include="View\ViewModels\" />
     <Folder Include="View\Styles\" />
-    <Folder Include="View\UserControls\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="5.3.2" />
   </ItemGroup>
 
 </Project>
