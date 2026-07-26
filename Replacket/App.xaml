@@ -11,9 +11,18 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
+                <!-- Material Design Themes -->
                 <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="DeepPurple" SecondaryColor="Amber" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
                 
+                <!-- Custom Reource Dicts -->
+                <ResourceDictionary Source="/View/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="/View/Styles/ColorBrushes.xaml"/>
+                <ResourceDictionary Source="/View/Styles/TextBlockStyles.xaml"/>
+                <ResourceDictionary Source="/View/Styles/StackPanelStyles.xaml"/>
+                <ResourceDictionary Source="/View/Styles/TxtBoxStyles.xaml"/>
+                <ResourceDictionary Source="/View/Styles/ButtonStyles.xaml"/>
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         

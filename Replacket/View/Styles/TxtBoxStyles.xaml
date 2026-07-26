@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="InputTxtBox" TargetType="TextBox">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontWeight" Value="Thin" />
+        <Setter Property="Foreground" Value="{StaticResource InputTxtColorBrush}" />
+        <Setter Property="FontStyle" Value="Italic" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="VerticalContentAlignment" Value="Bottom" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Padding" Value="0,0,0,4" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="BorderBrush" Value="{StaticResource InputTxtColorBrush}" />
+        <Setter Property="MinWidth" Value="50"/>
+        <Setter Property="Padding" Value="50"/>
+    </Style>
+    
+</ResourceDictionary>

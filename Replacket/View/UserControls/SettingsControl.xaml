@@ -4,11 +4,95 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Replacket.View.UserControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="400">
-    
-    <Grid Background="{StaticResource}">
+
+    <Grid Background="{StaticResource MaterialDesignLightSeparatorBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        
+        <!-- Setting headline with gear icon -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
             
+            <!-- Gear Icon -->
+            <materialDesign:PackIcon Kind="Settings" 
+                             Width="32" Height="32" 
+                             Foreground="{StaticResource PrimaryTxtColorBrush}" 
+                             VerticalAlignment="Center" 
+                             Margin="20,40,5,0" />
+
+            <!-- The Text -->
+            <TextBlock Text="Settings:" 
+               Style="{StaticResource HeadlineTxtBlockStyle}" 
+               VerticalAlignment="Center" />
+            
+        </StackPanel>
+        
+        
+        <!-- Options grid -->
+        <Grid Grid.Row="1" Margin="10,20,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+            <!-- Delay time -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="DelayTime:" 
+                    Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,20" />
+
+            <TextBox Grid.Row="0" Grid.Column="1"
+                    Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,20" />
+
+            <CheckBox Grid.Row="0" Grid.Column="2" Content="Normal speed" 
+                    FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource PrimaryTxtColorBrush}" 
+                    VerticalAlignment="Center" Margin="0,0,0,20" />
+
+
+            <!-- Repeat -->
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Repeat:" 
+                    Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,20" />
+
+            <TextBox Grid.Row="1" Grid.Column="1" 
+                    Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,20" />
+
+
+            <!-- Destination file -->
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Destination:" 
+                    Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,20" />
+
+            <TextBox Grid.Row="2" Grid.Column="1" 
+                    Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,20" />
+
+            <Button Grid.Row="2" Grid.Column="2" 
+                    Style="{StaticResource FileExplorerBtn}"
+                    VerticalAlignment="Center" 
+                    Margin="0,0,0,20"/>
+
+
+            <!-- Pickup file -->
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Pickup File:" 
+                    Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,0" />
+
+            <TextBox Grid.Row="3" Grid.Column="1" 
+             Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,0" />
+
+            <Button Grid.Row="3" Grid.Column="2" 
+                    Style="{StaticResource FileExplorerBtn}"/>
+
+        </Grid>
     </Grid>
     
 </UserControl>
