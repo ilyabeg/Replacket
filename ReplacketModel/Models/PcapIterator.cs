@@ -24,34 +24,27 @@ namespace ReplacketModel.Models
         public event EventHandler<ProgressUpdateEventArgs>? OnProgressUpdate;
         public event EventHandler<PacketReceivedEventArgs>? OnPacketReceived;
 
-        public PcapIterator() 
-        {
-        }
+        // public events to block user from activating model more than once at a time
+        public event Action OnSystemStart;
+        public event Action OnSystemEnd;
+
+        public PcapIterator() { }
 
         public async Task StartIterations(int delay, int repeats)
         {
-            if (string.IsNullOrEmpty(PcapFile)) 
-                return;
+            if (string.IsNullOrEmpty(PcapFile)) return;
 
-            // start running flag
+            // start system
             _isRunning = true;
+            OnSystemStart?.Invoke();
 
             try
             {
                 // repeat all of this the specified repeat times provided
-                while (_currentRepeat <= repeats)
+                while (_currentRepeat <= repeats && _isRunning)
                 {
-                    if (!_isRunning) break;
-
                     // if reader not initialized or was reset
-                    if (_pcapReader == null)
-                    {
-                        _totalPackets = GetPcapLength();
-
-                        _pcapReader = new CaptureFileReaderDevice(PcapFile);
-                        _pcapReader.Open();
-                        _currentPacketIndex = 0;
-                    }
+                    if (_pcapReader == null) InitReader();
 
                     // open async to reuse worker threads from thread pool to not crash when the pickup file is too long
                     await Task.Run(async () => { await Iterate(delay); });
@@ -59,8 +52,18 @@ namespace ReplacketModel.Models
             }
             finally
             {
-                _isRunning = false;
+                // close system
+                if (_currentRepeat > repeats) Reset();
+                OnSystemEnd?.Invoke();
             }
+        }
+
+        private void InitReader()
+        {
+            _totalPackets = GetPcapLength();
+            _pcapReader = new CaptureFileReaderDevice(PcapFile);
+            _pcapReader.Open();
+            _currentPacketIndex = 0;
         }
 
         private async Task Iterate(int delay)
@@ -71,41 +74,28 @@ namespace ReplacketModel.Models
                 while (_isRunning)
                 {
                     GetPacketStatus status = _pcapReader!.GetNextPacket(out PacketCapture capture);
-
                     // if finished reading the whole pickup
                     if (status == GetPacketStatus.NoRemainingPackets)
                     {
-                        _pcapReader.Close();
+                        _pcapReader.Close();     // <- close reader to re-open in the next iteration
                         _pcapReader = null;
-
                         _currentPacketIndex = 0; // <- start from the beginning
                         _currentRepeat++;        // <- move to next iteration
-
                         break; // Break out of the loop so StartIterations can repeat
                     }
 
                     RawCapture packet = capture.GetPacket();
 
                     // update packet and progress in UI
-                    OnPacketReceived?.Invoke(this, new PacketReceivedEventArgs(
-                        packet.Data,
-                        "tcp",
-                        packet.PacketLength,
-                        packet.LinkLayerType.ToString(),
-                        _currentPacketIndex
-                    ));
-
-                    _currentPacketIndex++;
+                    UpdateUIPacket(packet);
                     CalculateProgress();
+                    _currentPacketIndex++;
 
                     // forward packet
                     SendToDestInterface(packet);
 
                     // delay by provided milliseconds
-                    if (delay > 0)
-                    {
-                        await Task.Delay(delay);
-                    }
+                    if (delay > 0) await Task.Delay(delay);
                 }            
             }
             catch (Exception e)
@@ -137,6 +127,17 @@ namespace ReplacketModel.Models
         private void SendToDestInterface(RawCapture packet)
         {
             //Send(packetBytes, DestInterface);
+        }
+
+        // packet info invoker
+        private void UpdateUIPacket(RawCapture packet)
+        {
+            OnPacketReceived?.Invoke(this, new PacketReceivedEventArgs(
+                packet.Data,
+                packet.PacketLength,
+                packet.LinkLayerType.ToString(),
+                _currentPacketIndex
+            ));
         }
 
         // pcap progress calculation

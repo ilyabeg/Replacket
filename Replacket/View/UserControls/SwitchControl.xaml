@@ -15,10 +15,42 @@
         </Grid.ColumnDefinitions>
 
         <!-- Start btn -->
-        <Button Grid.Column="0" Style="{StaticResource StartBtnStyle}" Command="{Binding StartCommand}" />
+        <Button Grid.Column="0" Command="{Binding StartCommand}">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource StartBtnStyle}">
+                    <Style.Triggers>
+                        
+                        <DataTrigger Binding="{Binding CanClickStart}" Value="True">
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding CanClickStart}" Value="False">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
         <!-- Stop btn -->
-        <Button Grid.Column="1" Style="{StaticResource StopBtnStyle}" Command="{Binding StopCommand}" />
+        <Button Grid.Column="1" Command="{Binding StopCommand}">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource StopBtnStyle}">
+                    <Style.Triggers>
+                        
+                        <DataTrigger Binding="{Binding CanClickStart}" Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding CanClickStart}" Value="False">
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </DataTrigger>
+                        
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
     </Grid>
     

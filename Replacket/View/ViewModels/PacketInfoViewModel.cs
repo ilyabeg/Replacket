@@ -20,17 +20,6 @@ namespace Replacket.View.ViewModels
 			}
 		}
 
-		private string _protocol;
-		public string Protocol
-		{
-			get { return _protocol; }
-			set 
-			{
-				_protocol = value;
-				OnPropertyChanged();
-			}
-		}
-
 		private string _length;
 		public string Length
 		{
@@ -73,7 +62,6 @@ namespace Replacket.View.ViewModels
 
             Application.Current.Dispatcher.InvokeAsync(() =>
             {				
-				Protocol = "Protocol: " + e.PacketProtocol;
 				Length = "Length: " + e.PacketLength;
 				LinkLayer = "Link Layer: " + e.PacketLinkLayer;
 				Index = "Packet index: " + e.PacketIndex;

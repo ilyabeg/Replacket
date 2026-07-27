@@ -58,6 +58,8 @@ namespace Replacket.View.ViewModels
             get { return _delay; }
             set 
             {
+                if (_delay == value) return;
+
                 _delay = value;
                 _model.CeaseIterating();
                 OnPropertyChanged();
@@ -71,6 +73,8 @@ namespace Replacket.View.ViewModels
             get { return _repeat; }
             set 
             {
+                if (_repeat == value) return;
+
                 _repeat = value;
                 _model.CeaseIterating();
                 OnPropertyChanged();
@@ -120,6 +124,18 @@ namespace Replacket.View.ViewModels
         // packet info vm reference
         public PacketInfoViewModel PacketVM { get; }
 
+        // bool to enable/disable start/stop button
+        private bool _canClickStart = true;
+        public bool CanClickStart
+        {
+            get { return _canClickStart; }
+            set 
+            { 
+                _canClickStart = value;
+                OnPropertyChanged();
+            }
+        }
+
         // CONSTRUCTOR
         public MainViewModel()
         {
@@ -129,6 +145,8 @@ namespace Replacket.View.ViewModels
             _model.OnSystemError += (s, e) => OnSystemCrash?.Invoke(this, e);
             _model.OnProgressUpdate += (s, e) => UpdateProgressBar(this, e);
             _model.OnPacketReceived += (s, e) => PacketVM.UpdatePacketInfo(this, e);
+            _model.OnSystemStart += () => CanClickStart = false;
+            _model.OnSystemEnd += () => CanClickStart = true;
 
             StartCommand = new RelayCommand(ExecuteStart, CanStart);
             StopCommand = new RelayCommand(ExecuteStop);
@@ -158,9 +176,10 @@ namespace Replacket.View.ViewModels
 
 
         // button commands
-        private void ExecuteStart(object parameter)
+        private async void ExecuteStart(object parameter)
         {
-            _model.StartIterations(Delay, Repeat);
+            CanClickStart = false;
+            await _model.StartIterations(Delay, Repeat);
         }
         private bool CanStart(object parameter)
         {
@@ -175,8 +194,11 @@ namespace Replacket.View.ViewModels
 
             return true;
         }
-        private void ExecuteStop(object parameter) => _model.CeaseIterating();
-
+        private void ExecuteStop(object parameter)
+        {
+            CanClickStart = true;
+            _model.CeaseIterating();
+        }
 
         // invoke event in main window to show file browse dialog
         private void BrowsePickupClicked(object parameter) => OnPickupBrowseClick?.Invoke();
@@ -187,7 +209,7 @@ namespace Replacket.View.ViewModels
         {
             Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                this.Progress = e.Progress;
+                Progress = e.Progress;
             });
         }
 
