@@ -6,9 +6,9 @@ namespace ReplacketModel.Models
 {
     public class PcapIterator
     {
-        public string PcapFile;      // packets file
-        public string DestFile;      // destenation interface
-        public double PlaybackSpeed; // speed of forwarding
+        public string PcapFile;       // packets file
+        public string DestFile;       // destenation interface
+        public double? PlaybackSpeed; // speed of forwarding
 
         // keep pcap file reader reference for continuation
         private CaptureFileReaderDevice? _pcapReader;
@@ -79,6 +79,7 @@ namespace ReplacketModel.Models
             if (_destInterface != null) _destInterface.Close();
 
             CaptureDeviceList devices = CaptureDeviceList.Instance;
+            devices.Refresh();
             ICaptureDevice capDevice = devices.FirstOrDefault(d => d.Description == DestFile || d.Name == DestFile);
             _destInterface = capDevice as ILiveDevice;
 
@@ -115,6 +116,7 @@ namespace ReplacketModel.Models
 
                     RawCapture currentPacket = capture.GetPacket();
                     double timeDiff = CalculatePacketTimeDiff(currentPacket, prevPacket);
+                    timeDiff = (timeDiff < 0) ? 0 : timeDiff;                    
 
                     // accurate packet arrival time (plus change by playback speed)
                     await Task.Delay((int)(timeDiff / PlaybackSpeed));
@@ -145,13 +147,15 @@ namespace ReplacketModel.Models
             _currentPacketIndex++;
 
             // forward packet
-            SendToDestInterface(packet);
+            if (packet.Data.Length <= 1514 || (packet.Data.Length > 1514 && _destInterface.Description.Contains("loopback")))
+                SendToDestInterface(packet);
         }
 
         /// <summary>
-        /// Returns the time difference between 2 packets in MS: microseconds / 1000 = milliseconds
+        /// Returns the time difference between 2 packets in milliseconds
         /// </summary>
-        private double CalculatePacketTimeDiff(RawCapture current, RawCapture prev) => (current.Timeval.MicroSeconds - prev.Timeval.MicroSeconds) / 1000;
+        private double CalculatePacketTimeDiff(RawCapture current, RawCapture prev) => 
+            (current.Timeval.Date - prev.Timeval.Date).TotalMilliseconds;
 
         // reset data if files changed
         public void Reset()

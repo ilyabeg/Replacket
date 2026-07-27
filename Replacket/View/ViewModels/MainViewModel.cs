@@ -79,17 +79,16 @@ namespace Replacket.View.ViewModels
                 if (_delay == value) return;
 
                 _delay = value;
-                _model.CeaseIterating();
                 OnPropertyChanged();
             }
         }
 
         // all options for settings combo box
-        public ObservableCollection<double> AvailableSpeeds { get; } = new() { 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 5, 10 };
+        public ObservableCollection<double> AvailableSpeeds { get; } = new() { 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 5, 10, 100 };
 
         // destanation interface file (selection)
-        private double _speed;
-        public double SelectedSpeed
+        private double? _speed;
+        public double? SelectedSpeed
         {
             get { return _speed; }
             set
@@ -110,7 +109,6 @@ namespace Replacket.View.ViewModels
                 if (_repeat == value) return;
 
                 _repeat = value;
-                _model.CeaseIterating();
                 OnPropertyChanged();
             }
         }
@@ -196,6 +194,7 @@ namespace Replacket.View.ViewModels
 
             // all devices that SharpPcap finds
             CaptureDeviceList devices = CaptureDeviceList.Instance;
+            devices.Refresh();
 
             if (devices.Count < 1)
             {
@@ -204,11 +203,11 @@ namespace Replacket.View.ViewModels
             }
 
             foreach (var device in devices)
-            {
-                AvailableInterfaces.Add(device.Description); // al devices names
+            {   
+                if (!device.Description.Contains("WAN Miniport") && !device.Description.Contains("Realtek"))
+                    AvailableInterfaces.Add(device.Description); // al devices names}
             }
         }
-
 
         // button commands
         private async void ExecuteStart(object parameter)
@@ -221,10 +220,13 @@ namespace Replacket.View.ViewModels
             if (string.IsNullOrWhiteSpace(PcapFile) || string.IsNullOrWhiteSpace(DestenationInterface))
                 return false;
 
-            if (!File.Exists(PcapFile))
+            if (!File.Exists(PcapFile)) 
                 return false;
 
-            if (_delay < 0 || _repeat < 0)
+            if (_delay < 0 || _repeat < 0) 
+                return false;
+
+            if (SelectedSpeed == null) 
                 return false;
 
             return true;
