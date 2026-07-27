@@ -35,16 +35,17 @@
                     CornerRadius="10">
                 <Grid Margin="5">
 
-                    <StackPanel ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel>
 
-                        <TextBlock Text="{Binding Index}"  Style="{StaticResource PacketInfoTxtBlock}" />
-                        <TextBlock Text="{Binding Length}"  Style="{StaticResource PacketInfoTxtBlock}" />
-                        <TextBlock Text="{Binding Protocol}"  Style="{StaticResource PacketInfoTxtBlock}" />
-                        <TextBlock Text="{Binding LinkLayer}"  Style="{StaticResource PacketInfoTxtBlock}" />
-                        <TextBlock Text="{Binding HexaBytes}"  Style="{StaticResource PacketBytesTxtBlock}" />
+                            <TextBlock Text="{Binding Index}"  Style="{StaticResource PacketInfoTxtBlock}" />
+                            <TextBlock Text="{Binding Length}"  Style="{StaticResource PacketInfoTxtBlock}" />
+                            <TextBlock Text="{Binding Protocol}"  Style="{StaticResource PacketInfoTxtBlock}" />
+                            <TextBlock Text="{Binding LinkLayer}"  Style="{StaticResource PacketInfoTxtBlock}" />
+                            <TextBlock Text="{Binding HexaBytes}"  Style="{StaticResource PacketBytesTxtBlock}" />
                     
-                    </StackPanel>
-
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
             </Border>
         </Grid>
