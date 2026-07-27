@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using SharpPcap;
 using ReplacketModel.Events;
+using System.Windows;
 
 namespace Replacket.View.ViewModels
 {
@@ -21,8 +22,8 @@ namespace Replacket.View.ViewModels
 
 
         // progress bar progress
-        private int _progress;
-        public int Progress
+        private double _progress;
+        public double Progress
         {
             get { return _progress; }
             set 
@@ -58,6 +59,7 @@ namespace Replacket.View.ViewModels
             set 
             {
                 _delay = value;
+                _model.CeaseIterating();
                 OnPropertyChanged();
             }
         }
@@ -70,6 +72,7 @@ namespace Replacket.View.ViewModels
             set 
             {
                 _repeat = value;
+                _model.CeaseIterating();
                 OnPropertyChanged();
             }
         }
@@ -98,7 +101,9 @@ namespace Replacket.View.ViewModels
             set 
             {
                 _pcapFile = value;
+                Progress = 0;
                 _model.PcapFile = value;
+                _model.Reset(); // reset iterator data
                 OnPropertyChanged();
             }
         }
@@ -112,12 +117,18 @@ namespace Replacket.View.ViewModels
         // model reference
         private PcapIterator _model;
 
+        // packet info vm reference
+        public PacketInfoViewModel PacketVM { get; }
 
         // CONSTRUCTOR
         public MainViewModel()
         {
+            PacketVM = new PacketInfoViewModel();
+
             _model = new PcapIterator();
             _model.OnSystemError += (s, e) => OnSystemCrash?.Invoke(this, e);
+            _model.OnProgressUpdate += (s, e) => UpdateProgressBar(this, e);
+            _model.OnPacketReceived += (s, e) => PacketVM.UpdatePacketInfo(this, e);
 
             StartCommand = new RelayCommand(ExecuteStart, CanStart);
             StopCommand = new RelayCommand(ExecuteStop);
@@ -126,13 +137,12 @@ namespace Replacket.View.ViewModels
             GetNetworkInterfaces();
         }
 
-
         private void GetNetworkInterfaces()
         {
             AvailableInterfaces.Clear();
 
             // all devices that SharpPcap finds
-            var devices = CaptureDeviceList.Instance;
+            CaptureDeviceList devices = CaptureDeviceList.Instance;
 
             if (devices.Count < 1)
             {
@@ -150,7 +160,7 @@ namespace Replacket.View.ViewModels
         // button commands
         private void ExecuteStart(object parameter)
         {
-            _model.Iterate(Delay, Repeat);
+            _model.StartIterations(Delay, Repeat);
         }
         private bool CanStart(object parameter)
         {
@@ -165,14 +175,21 @@ namespace Replacket.View.ViewModels
 
             return true;
         }
+        private void ExecuteStop(object parameter) => _model.CeaseIterating();
 
-        private void ExecuteStop(object parameter)
-        {
-            _model.CeaseIterating();
-        }
 
         // invoke event in main window to show file browse dialog
         private void BrowsePickupClicked(object parameter) => OnPickupBrowseClick?.Invoke();
+
+
+        // progress bar update event handler
+        private void UpdateProgressBar(object sender, ProgressUpdateEventArgs e)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                this.Progress = e.Progress;
+            });
+        }
 
 
         public event PropertyChangedEventHandler? PropertyChanged;

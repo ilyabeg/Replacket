@@ -46,4 +46,28 @@
         <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
 
+    <Style x:Key="PacketInfoTxtBlock" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTxtColorBrush}" />
+        <Setter Property="FontWeight" Value="Thin" />
+        <Setter Property="Margin" Value="5,5,0,0" />
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="MinWidth" Value="80" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+
+    <Style x:Key="PacketBytesTxtBlock" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTxtColorBrush}" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
 </ResourceDictionary>

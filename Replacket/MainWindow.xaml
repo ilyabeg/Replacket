@@ -25,7 +25,7 @@
             
             
             <!-- Packet info -->
-            <userControls:PacketInfoControl Grid.Row="0" />
+            <userControls:PacketInfoControl DataContext="{Binding PacketVM}" Grid.Row="0" />
 
             <!-- Progress bar -->
             <userControls:ProgressBar Grid.Row="1" />

@@ -30,7 +30,7 @@
              Foreground="#4CAF50"/>
 
         <TextBlock Grid.Row="1"
-               Text="{Binding Value, ElementName=progressBar, StringFormat={}{0}%}" 
+               Text="{Binding Value, ElementName=progressBar, StringFormat={}{0:0}%}" 
                HorizontalAlignment="Center" 
                VerticalAlignment="Center" 
                FontSize="20"

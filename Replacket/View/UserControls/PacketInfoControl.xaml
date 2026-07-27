@@ -31,10 +31,19 @@
 
 
         <Grid Grid.Row="1" Margin="10" >
-            <Border BorderThickness="2" BorderBrush="{StaticResource MaterialDesignDarkSeparatorBackground}">
+            <Border BorderThickness="2" BorderBrush="{StaticResource InputTxtColorBrush}"
+                    CornerRadius="10">
                 <Grid Margin="5">
 
-                    <!-- actual packet information -->
+                    <StackPanel ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                        <TextBlock Text="{Binding Index}"  Style="{StaticResource PacketInfoTxtBlock}" />
+                        <TextBlock Text="{Binding Length}"  Style="{StaticResource PacketInfoTxtBlock}" />
+                        <TextBlock Text="{Binding Protocol}"  Style="{StaticResource PacketInfoTxtBlock}" />
+                        <TextBlock Text="{Binding LinkLayer}"  Style="{StaticResource PacketInfoTxtBlock}" />
+                        <TextBlock Text="{Binding HexaBytes}"  Style="{StaticResource PacketBytesTxtBlock}" />
+                    
+                    </StackPanel>
 
                 </Grid>
             </Border>
