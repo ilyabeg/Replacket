@@ -22,6 +22,8 @@
                 <ResourceDictionary Source="/View/Styles/StackPanelStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/TxtBoxStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/View/Styles/CheckBoxStyles.xaml"/>
+                <ResourceDictionary Source="/View/Styles/ComboBoxStyles.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

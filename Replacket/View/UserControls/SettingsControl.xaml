@@ -46,15 +46,15 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
 
             <!-- Delay time -->
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="DelayTime:" 
-                    Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,20" />
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Delay Time:" 
+                    Style="{StaticResource SettingsOptionTxtBlock}" />
 
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Delay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
-                     VerticalAlignment="Center" Margin="0,0,15,20">
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Delay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.Style>
                     <Style TargetType="TextBox" BasedOn="{StaticResource InputTxtBox}">
                         <Style.Triggers>
@@ -73,46 +73,68 @@
                 </TextBox.Style>
             </TextBox>
 
-            <CheckBox Grid.Row="0" Grid.Column="2" Content="Normal speed" 
-                      FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource PrimaryTxtColorBrush}" 
-                      VerticalAlignment="Center" Margin="0,0,0,20"
-                      IsChecked="{Binding NormalChecked}"/>
+            <CheckBox Grid.Row="0" Grid.Column="2" Content="No Delay" 
+                      IsChecked="{Binding NormalChecked}"
+                      Style="{StaticResource SettingsCheckBox}"/>
+
+            
+            <!-- Speed -->
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Speed:" 
+                      Style="{StaticResource SettingsOptionTxtBlock}" />
+
+            <ComboBox Grid.Row="1" Grid.Column="1" 
+                      ItemsSource="{Binding AvailableSpeeds}"
+                      SelectedItem="{Binding SelectedSpeed}">
+                <ComboBox.Style>
+                    <Style TargetType="ComboBox" BasedOn="{StaticResource SettingsComboBox}">
+                        <Style.Triggers>
+                            
+                            <!-- Disable combobox if og difference checked -->
+                            <DataTrigger Binding="{Binding DifferenceChecked}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding DifferenceChecked}" Value="False">
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </DataTrigger>
+                            
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Style>
+            </ComboBox>
+
+            <CheckBox Grid.Row="1" Grid.Column="2" Content="Original Speed"                       
+                      IsChecked="{Binding DifferenceChecked}"
+                      Style="{StaticResource SettingsCheckBox}"/>
 
 
             <!-- Repeat -->
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Repeat:" 
-                    Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,20" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Repeat:" 
+                    Style="{StaticResource SettingsOptionTxtBlock}" />
 
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Repeat, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,20" />
-
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Repeat, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource InputTxtBox}" />
+            
 
             <!-- Destination interface -->
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Destination:" 
-                    Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,20" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Destination:" 
+                    Style="{StaticResource SettingsOptionTxtBlock}" />
 
-            <ComboBox Grid.Row="2" Grid.Column="1" 
+            <ComboBox Grid.Row="3" Grid.Column="1" 
                      ItemsSource="{Binding AvailableInterfaces}"
                      SelectedItem="{Binding DestenationInterface}"
-                     Style="{StaticResource MaterialDesignDataGridComboBox}" 
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Left"
-                     FontSize="15" FontWeight="Thin"
-                     Foreground="{StaticResource InputTxtColorBrush}"
-                     FontStyle="Italic" BorderBrush="{StaticResource InputTxtColorBrush}"
-                     BorderThickness="0,0,0,1"
-                     Width="50" Padding="0,0,0,4"/>
+                     Style="{StaticResource SettingsComboBox}" />
 
 
             <!-- Pickup file -->
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Pickup File:" 
-                     Style="{StaticResource SettingsOptionTxtBlock}" VerticalAlignment="Center" Margin="0,0,15,0" />
-            
-            <TextBox Grid.Row="3" Grid.Column="1"
-                     Text="{Binding PcapFile, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{StaticResource InputTxtBox}" VerticalAlignment="Center" Margin="0,0,15,0" />
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Pickup File:" 
+                     Style="{StaticResource SettingsOptionTxtBlock}" />
 
-            <Button Grid.Row="3" Grid.Column="2" 
+            <TextBox Grid.Row="4" Grid.Column="1"
+                     Text="{Binding PcapFile, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource InputTxtBox}" />
+
+            <Button Grid.Row="4" Grid.Column="2" 
                      Style="{StaticResource FileExplorerBtn}"
                      Command="{Binding BrowsePickupCommand}"/>
 

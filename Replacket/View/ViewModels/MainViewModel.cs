@@ -51,6 +51,24 @@ namespace Replacket.View.ViewModels
             }
         }
 
+        // og difference boolean for the check box
+        private bool _diffChecked;
+        public bool DifferenceChecked
+        {
+            get { return _diffChecked; }
+            set
+            {
+                _diffChecked = value;
+                OnPropertyChanged();
+
+                // regular speed
+                if (_diffChecked)
+                {
+                    SelectedSpeed = 1.0;
+                }
+            }
+        }
+
         // delay time between each packet
         private int _delay;
         public int Delay
@@ -62,6 +80,22 @@ namespace Replacket.View.ViewModels
 
                 _delay = value;
                 _model.CeaseIterating();
+                OnPropertyChanged();
+            }
+        }
+
+        // all options for settings combo box
+        public ObservableCollection<double> AvailableSpeeds { get; } = new() { 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 5, 10 };
+
+        // destanation interface file (selection)
+        private double _speed;
+        public double SelectedSpeed
+        {
+            get { return _speed; }
+            set
+            {
+                _speed = value;
+                _model.PlaybackSpeed = value;
                 OnPropertyChanged();
             }
         }
@@ -155,6 +189,7 @@ namespace Replacket.View.ViewModels
             GetNetworkInterfaces();
         }
 
+        // initialize combo boxes
         private void GetNetworkInterfaces()
         {
             AvailableInterfaces.Clear();

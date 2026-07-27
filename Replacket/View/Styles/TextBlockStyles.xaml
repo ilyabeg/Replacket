@@ -16,11 +16,11 @@
         <Setter Property="FontSize" Value="20" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTxtColorBrush}" />
         <Setter Property="FontWeight" Value="Thin" />
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="Margin" Value="0,5,5,10" />
         <Setter Property="Width" Value="Auto" />
         <Setter Property="MinWidth" Value="80" />
         <Setter Property="Height" Value="Auto" />
-        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalAlignment" Value="Left" />
     </Style>
 

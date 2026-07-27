@@ -6,12 +6,16 @@ namespace ReplacketModel.Models
 {
     public class PcapIterator
     {
-        public string PcapFile; // packets file
-        public string DestFile; // destenation interface
+        public string PcapFile;      // packets file
+        public string DestFile;      // destenation interface
+        public double PlaybackSpeed; // speed of forwarding
 
         // keep pcap file reader reference for continuation
         private CaptureFileReaderDevice? _pcapReader;
         private int _currentRepeat;
+
+        // keep reference of the selected network interface
+        private ILiveDevice? _destInterface;
 
         // fields for calculating progress 
         private int _totalPackets;
@@ -45,10 +49,15 @@ namespace ReplacketModel.Models
                 {
                     // if reader not initialized or was reset
                     if (_pcapReader == null) InitReader();
+                    InitDestenation();
 
                     // open async to reuse worker threads from thread pool to not crash when the pickup file is too long
                     await Task.Run(async () => { await Iterate(delay); });
                 }
+            }
+            catch (Exception e)
+            {
+                OnSystemError?.Invoke(this, new SystemErrorEventArgs($"Couldn't iterate due to: {e.Message}."));
             }
             finally
             {
@@ -65,15 +74,35 @@ namespace ReplacketModel.Models
             _pcapReader.Open();
             _currentPacketIndex = 0;
         }
+        private void InitDestenation()
+        {
+            if (_destInterface != null) _destInterface.Close();
+
+            CaptureDeviceList devices = CaptureDeviceList.Instance;
+            ICaptureDevice capDevice = devices.FirstOrDefault(d => d.Description == DestFile || d.Name == DestFile);
+            _destInterface = capDevice as ILiveDevice;
+
+            if (_destInterface == null)
+                throw new Exception($"Network interface '{DestFile}' was not found.");
+
+            // open device for sending
+            _destInterface.Open();
+        }
 
         private async Task Iterate(int delay)
         {
             try
             {
+                GetPacketStatus status = _pcapReader!.GetNextPacket(out PacketCapture prevCapture);
+                if (status == GetPacketStatus.NoRemainingPackets) return;
+
+                RawCapture prevPacket = prevCapture.GetPacket();
+                HandlePacket(prevPacket);
+
                 // foreach packet read
                 while (_isRunning)
                 {
-                    GetPacketStatus status = _pcapReader!.GetNextPacket(out PacketCapture capture);
+                    status = _pcapReader!.GetNextPacket(out PacketCapture capture);
                     // if finished reading the whole pickup
                     if (status == GetPacketStatus.NoRemainingPackets)
                     {
@@ -84,18 +113,17 @@ namespace ReplacketModel.Models
                         break; // Break out of the loop so StartIterations can repeat
                     }
 
-                    RawCapture packet = capture.GetPacket();
+                    RawCapture currentPacket = capture.GetPacket();
+                    double timeDiff = CalculatePacketTimeDiff(currentPacket, prevPacket);
 
-                    // update packet and progress in UI
-                    UpdateUIPacket(packet);
-                    CalculateProgress();
-                    _currentPacketIndex++;
+                    // accurate packet arrival time (plus change by playback speed)
+                    await Task.Delay((int)(timeDiff / PlaybackSpeed));
 
-                    // forward packet
-                    SendToDestInterface(packet);
+                    HandlePacket(currentPacket);
+                    prevPacket = currentPacket;
 
                     // delay by provided milliseconds
-                    if (delay > 0) await Task.Delay(delay);
+                    if (delay > 0) await Task.Delay(delay);                    
                 }            
             }
             catch (Exception e)
@@ -106,6 +134,24 @@ namespace ReplacketModel.Models
 
         // STOP button click
         public void CeaseIterating() => _isRunning = false;
+
+
+        // method to handle each packet 
+        private void HandlePacket(RawCapture packet)
+        {
+            // update packet and progress in UI
+            UpdateUIPacket(packet);
+            CalculateProgress();
+            _currentPacketIndex++;
+
+            // forward packet
+            SendToDestInterface(packet);
+        }
+
+        /// <summary>
+        /// Returns the time difference between 2 packets in MS: microseconds / 1000 = milliseconds
+        /// </summary>
+        private double CalculatePacketTimeDiff(RawCapture current, RawCapture prev) => (current.Timeval.MicroSeconds - prev.Timeval.MicroSeconds) / 1000;
 
         // reset data if files changed
         public void Reset()
@@ -126,7 +172,8 @@ namespace ReplacketModel.Models
         // forward to dest interface
         private void SendToDestInterface(RawCapture packet)
         {
-            //Send(packetBytes, DestInterface);
+            if (_destInterface != null)
+                _destInterface.SendPacket(packet.Data);
         }
 
         // packet info invoker
