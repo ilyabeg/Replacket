@@ -27,6 +27,9 @@
                 <ResourceDictionary Source="/View/Styles/ProgressBarStyles.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
         </ResourceDictionary>
         
     </Application.Resources>

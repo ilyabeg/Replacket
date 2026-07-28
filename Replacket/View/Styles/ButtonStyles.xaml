@@ -23,7 +23,7 @@
         <Setter Property="Content" Value="START" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="1.5" />
         <Setter Property="BorderBrush" Value="DarkGreen" />
         <Setter Property="Background" Value="#4CAF50" />
         <Setter Property="HorizontalAlignment" Value="Right" />
@@ -31,7 +31,7 @@
         <Setter Property="Margin" Value="5,5,5,10" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="5" />
-        <Setter Property="Width" Value="100" />
+        <Setter Property="Width" Value="150" />
         <Setter Property="Height" Value="40" />
     </Style>
 
@@ -39,7 +39,7 @@
         <Setter Property="Content" Value="STOP" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="1.5" />
         <Setter Property="BorderBrush" Value="DarkRed" />
         <Setter Property="Background" Value="#c91842" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -47,8 +47,29 @@
         <Setter Property="Margin" Value="5,5,5,10" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="5" />
-        <Setter Property="Width" Value="100" />
+        <Setter Property="Width" Value="150" />
         <Setter Property="Height" Value="40" />
+    </Style>
+
+    <Style x:Key="OpenSettingsBtn" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <materialDesign:PackIcon Foreground="{StaticResource InputTxtColorBrush}" Kind="Settings" Width="30" Height="30" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

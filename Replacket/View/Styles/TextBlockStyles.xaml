@@ -20,7 +20,7 @@
         <Setter Property="HorizontalAlignment" Value="Left" />
     </Style>
 
-    <Style x:Key="ProgressHeadline" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline4TextBlock}">
+    <Style x:Key="ProgressHeadline" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
         <Setter Property="Text" Value="Progress..." />
         <Setter Property="Foreground" Value="{StaticResource PrimaryTxtColorBrush}" />
         <Setter Property="Margin" Value="15,5,10,5" />

@@ -8,14 +8,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="400">
 
-    <Grid Background="{StaticResource MaterialDesignLightSeparatorBackground}">
+    <Grid Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
 
         <Border BorderThickness="2"
         BorderBrush="{StaticResource InputTxtColorBrush}"
         CornerRadius="10"
                 Margin="10">
     
-    <Grid Background="Transparent"
+    <Grid Background="{StaticResource MaterialDesignLightSeparatorBackground}"
           materialDesign:ThemeAssist.Theme="Dark">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
