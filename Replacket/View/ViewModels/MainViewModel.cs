@@ -204,8 +204,7 @@ namespace Replacket.View.ViewModels
 
             foreach (var device in devices)
             {   
-                if (!device.Description.Contains("WAN Miniport") && !device.Description.Contains("Realtek"))
-                    AvailableInterfaces.Add(device.Description); // al devices names}
+                AvailableInterfaces.Add(device.Description); // al devices names}
             }
         }
 

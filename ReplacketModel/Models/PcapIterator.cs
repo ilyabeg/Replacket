@@ -6,6 +6,9 @@ namespace ReplacketModel.Models
 {
     public class PcapIterator
     {
+        // Max Transition Unit
+        private readonly int _mtu = 1514;
+
         public string PcapFile;       // packets file
         public string DestFile;       // destenation interface
         public double? PlaybackSpeed; // speed of forwarding
@@ -147,7 +150,7 @@ namespace ReplacketModel.Models
             _currentPacketIndex++;
 
             // forward packet
-            if (packet.Data.Length <= 1514 || (packet.Data.Length > 1514 && _destInterface.Description.Contains("loopback")))
+            if (packet.Data.Length <= _mtu || (packet.Data.Length > _mtu && _destInterface.Description.Contains("loopback")))
                 SendToDestInterface(packet);
         }
 
