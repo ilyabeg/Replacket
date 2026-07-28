@@ -9,7 +9,7 @@
                     <Grid>
                         <Border BorderThickness="1" Background="{StaticResource PrimaryTxtColorBrush}" CornerRadius="8"/>
                         <Grid x:Name="PART_Track">
-                            <Border x:Name="PART_Indicator" Background="#8BC34A" CornerRadius="8" HorizontalAlignment="Left" />
+                            <Border x:Name="PART_Indicator" Background="#4CAF50" CornerRadius="8" HorizontalAlignment="Left" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
