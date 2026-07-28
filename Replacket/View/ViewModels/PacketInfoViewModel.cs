@@ -63,7 +63,7 @@ namespace Replacket.View.ViewModels
             Application.Current.Dispatcher.InvokeAsync(() =>
             {				
 				Length = "Length: " + e.PacketLength;
-				LinkLayer = "Link Layer: " + e.PacketLinkLayer;
+				LinkLayer = "Link-Layer Type: " + e.PacketLinkLayer;
 				Index = "Packet index: " + e.PacketIndex;
             });
         }

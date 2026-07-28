@@ -19,16 +19,13 @@
         </Setter>
     </Style>
 
-    <Style x:Key="StartBtnStyle" TargetType="Button">
+    <Style x:Key="StartBtnStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
         <Setter Property="Content" Value="START" />
-        <Setter Property="FontSize" Value="20" />
-        <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="DarkGreen" />
         <Setter Property="Background" Value="#4CAF50" />
-        <Setter Property="Foreground" Value="Black" />
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Margin" Value="5,5,5,10" />
@@ -38,16 +35,13 @@
         <Setter Property="Height" Value="40" />
     </Style>
 
-    <Style x:Key="StopBtnStyle" TargetType="Button">
+    <Style x:Key="StopBtnStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
         <Setter Property="Content" Value="STOP" />
-        <Setter Property="FontSize" Value="20" />
-        <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="DarkRed" />
         <Setter Property="Background" Value="#c91842" />
-        <Setter Property="Foreground" Value="Black" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Margin" Value="5,5,5,10" />

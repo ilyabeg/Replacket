@@ -24,6 +24,7 @@
                 <ResourceDictionary Source="/View/Styles/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/CheckBoxStyles.xaml"/>
                 <ResourceDictionary Source="/View/Styles/ComboBoxStyles.xaml"/>
+                <ResourceDictionary Source="/View/Styles/ProgressBarStyles.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

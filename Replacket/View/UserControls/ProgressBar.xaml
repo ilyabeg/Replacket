@@ -18,24 +18,19 @@
             Style="{StaticResource ProgressHeadline}" 
             VerticalAlignment="Center" />
 
-        <ProgressBar Grid.Row="1" 
-             x:Name="progressBar"
-             Style="{StaticResource MaterialDesignLinearProgressBar}" 
-             Value="{Binding Progress}"
-             Height="30" 
-             Margin="15,0,15,20"
-             BorderBrush="{StaticResource MaterialDesignShadowBrush}"
-             BorderThickness="2"
-             Background="#B0B0B0"
-             Foreground="#4CAF50"/>
+        <ProgressBar Grid.Row="1"
+            Margin="15,0,15,20" Height="15"
+            x:Name="progressBar"
+            Value="{Binding Progress}"
+            Style="{StaticResource RoundedCornerProgressBar}"/>
 
         <TextBlock Grid.Row="1"
                Text="{Binding Value, ElementName=progressBar, StringFormat={}{0:0}%}" 
                HorizontalAlignment="Center" 
                VerticalAlignment="Center" 
-               FontSize="20"
+               FontSize="12"
                FontWeight="SemiBold"
-               Foreground="{StaticResource PrimaryTxtColorBrush}"
+               Foreground="Black"
                Margin="15,0,15,20"/>
 
     </Grid>
