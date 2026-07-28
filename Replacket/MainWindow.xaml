@@ -10,7 +10,7 @@
         Title="Replacket" Height="600" Width="900"
         ResizeMode="NoResize">
 
-    <materialDesign:DrawerHost x:Name="RootDrawer" OverlayBackground="Black">
+    <materialDesign:DrawerHost x:Name="drawer" OverlayBackground="Black">
         <materialDesign:DrawerHost.RightDrawerContent>
             <Grid Width="Auto" Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
 
@@ -49,7 +49,7 @@
             </Grid>
 
             <Border Background="#363738" 
-                Visibility="{Binding IsRightDrawerOpen, ElementName=RootDrawer, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                Visibility="{Binding IsRightDrawerOpen, ElementName=drawer, Converter={StaticResource BooleanToVisibilityConverter}}" />
             
             <Button Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                 CommandParameter="{x:Static Dock.Right}"
